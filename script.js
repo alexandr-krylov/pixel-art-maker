@@ -1,8 +1,13 @@
 const canvasWidth = 80;
 const canvasHeight = 40;
 let currentColor = "red";
+let isDrawing = false;
 const canvas = document.getElementById("canvas");
 canvas.addEventListener("click", drawPixel);
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mouseup", stopDraw);
+document.body.addEventListener("mousedown", () => {isDrawing = true});
+document.body.addEventListener("mouseup", () => {isDrawing = false});
 canvas.style.width = canvasWidth * 10 + "px";
 canvas.style.height = canvasHeight * 10 + "px";
 for (let i = 0; i < canvasHeight; i++){
@@ -12,6 +17,7 @@ for (let i = 0; i < canvasHeight; i++){
         let pixel = document.createElement("div");
         pixel.classList.add("pixel");
         row.appendChild(pixel);
+        pixel.addEventListener("mouseenter", draw);
     }
     canvas.appendChild(row);
 }
@@ -43,4 +49,19 @@ function setColor(evt) {
 function showCurrentCollor() {
     const element = document.getElementById("current-color");
     element.style.background = currentColor;
+}
+
+function startDraw(evt) {
+    isDrawing = true;
+    draw(evt)
+}
+
+function stopDraw() {
+    isDrawing = false;
+}
+
+function draw(evt) {
+    if (isDrawing) {
+        drawPixel(evt);
+    }
 }
