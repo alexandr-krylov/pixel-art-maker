@@ -3,6 +3,9 @@ const canvasHeight = 40;
 let currentColor = "red";
 let isDrawing = false;
 const canvas = document.getElementById("canvas");
+const color  =  document.querySelector("input[type=color]");
+color.setAttribute("data-value", color.value);
+color.addEventListener("change", customColorChange);
 canvas.addEventListener("click", drawPixel);
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mouseup", stopDraw);
@@ -64,4 +67,12 @@ function draw(evt) {
     if (isDrawing) {
         drawPixel(evt);
     }
+}
+
+function customColorChange(evt) {
+    currentColor = evt.target.value;
+    evt.target.setAttribute("data-value", currentColor);
+    evt.target.style.background = currentColor;
+    evt.stopPropagation();
+    showCurrentCollor();
 }
