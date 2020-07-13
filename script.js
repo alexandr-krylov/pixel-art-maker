@@ -4,6 +4,12 @@ let currentColor = "red";
 let isDrawing = false;
 const canvas = document.getElementById("canvas");
 const color  =  document.querySelector("input[type=color]");
+const saveButton = document.getElementById("save-button");
+const loadButton = document.getElementById("load-button");
+const storage = window.localStorage;
+saveButton.addEventListener("click", saveCanvas);
+loadButton.addEventListener("click", loadCanvas);
+
 color.setAttribute("data-value", color.value);
 color.addEventListener("change", customColorChange);
 canvas.addEventListener("click", drawPixel);
@@ -75,4 +81,44 @@ function customColorChange(evt) {
     evt.target.style.background = currentColor;
     evt.stopPropagation();
     showCurrentCollor();
+}
+
+function saveCanvas() {
+    let canvasForSave = [];
+    let rows = canvas.children;
+    let canvasForSaveRow = 0, canvasForSavePixel = 0;
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].classList.contains("row")) {
+            let pixels = rows[i].children;
+            canvasForSave[canvasForSaveRow] = [];
+            for (let j = 0; j < pixels.length; j++) {
+                if (pixels[j].classList.contains("pixel")) {
+                    canvasForSave[canvasForSaveRow][canvasForSavePixel] = pixels[j].style.backgroundColor;
+                    canvasForSavePixel++;
+                }
+            }
+            canvasForSavePixel = 0;
+            canvasForSaveRow++
+        }
+    }
+    storage.setItem("canvas",  JSON.stringify(canvasForSave));
+}
+
+function loadCanvas() {
+    let canvasForSave = JSON.parse(storage.getItem("canvas"));
+    let rows = canvas.children;
+    let canvasForSaveRow = 0, canvasForSavePixel = 0;
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].classList.contains("row")) {
+            let pixels = rows[i].children;
+            for (let j = 0; j < pixels.length; j++) {
+                if (pixels[j].classList.contains("pixel")) {
+                     pixels[j].style.backgroundColor = canvasForSave[canvasForSaveRow][canvasForSavePixel];
+                    canvasForSavePixel++;
+                }
+            }
+            canvasForSavePixel = 0;
+            canvasForSaveRow++
+        }
+    }
 }
