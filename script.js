@@ -150,7 +150,7 @@ function floodFill(element, replaceableColor, fillingColor) {
 function getNorthElement(element) {
     let parent = element.parentElement, northRow = null;
     while (parent.previousSibling) {
-        if (parent.previousSibling.classList.contains("row")) {
+        if (parent.previousSibling.classList && parent.previousSibling.classList.contains("row")) {
             northRow = parent.previousSibling;
             break;
         }
@@ -159,7 +159,7 @@ function getNorthElement(element) {
     if (!northRow) return null;
     let westCount = 0;
     while (element.previousSibling) {
-        if (element.previousSibling.classList.contains("pixel")) westCount ++;
+        if (element.previousSibling.classList && element.previousSibling.classList.contains("pixel")) westCount ++;
         element = element.previousSibling;
     }
     let northPixelCandidate = northRow.firstChild;
@@ -188,7 +188,7 @@ function getEastElement(element) {
 function getSouthElement(element) {
     let parent = element.parentElement, southRow = null;
     while (parent.nextSibling) {
-        if (parent.nextSibling.classList.contains("row")) {
+        if (parent.nextSibling.classList && parent.nextSibling.classList.contains("row")) {
             southRow = parent.nextSibling;
             break;
         }
@@ -197,7 +197,7 @@ function getSouthElement(element) {
     if (!southRow) return null;
     let westCount = 0;
     while (element.previousSibling) {
-        if (element.previousSibling.classList.contains("pixel")) westCount ++;
+        if (element.previousSibling.classList && element.previousSibling.classList.contains("pixel")) westCount ++;
         element = element.previousSibling;
     }
     let southPixelCandidate = southRow.firstChild;
