@@ -4,6 +4,7 @@
     border: 10px solid silver;
     border-radius: 5px;
     margin: auto;
+    /*cursor: url("icons/paint_32_32.png"), auto;*/
 }
 .pixel{
     display: table-cell;
@@ -42,3 +43,5 @@ h1{text-align: center}
     height: 20px;
     border-radius: 12px;
 }
+
+button{height: 24px}
